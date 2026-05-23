@@ -24,9 +24,9 @@ sinks:
   display:
     enabled: true
   video:
-    enabled: true
+    enabled: false
     path: outputs/annotated.mp4
   stats:
-    enabled: true
+    enabled: false
     format: csv
     path: outputs/counts.csv

@@ -151,8 +151,8 @@ def build_ui() -> gr.Blocks:
                     line_x2 = gr.Number(value=960, label="x2")
                     line_y2 = gr.Number(value=1080, label="y2")
 
-                save_video = gr.Checkbox(value=True, label="Save annotated video")
-                save_stats = gr.Checkbox(value=True, label="Save stats CSV")
+                save_video = gr.Checkbox(value=False, label="Save annotated video")
+                save_stats = gr.Checkbox(value=False, label="Save stats CSV")
 
                 start_btn = gr.Button("Start", variant="primary")
                 stop_btn = gr.Button("Stop")

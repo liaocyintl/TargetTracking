@@ -5,11 +5,11 @@ description = "Pluggable visual object tracking and counting"
 requires-python = ">=3.11"
 dependencies = [
     "ultralytics>=8.3",
-    "opencv-python>=4.10",
+    "opencv-python>=4.10.0.84",
     "numpy>=1.26",
     "pyyaml>=6",
     "pydantic>=2",
-    "gradio>=5",
+    "gradio>=6,<7",
 ]
 
 [project.optional-dependencies]
@@ -36,3 +36,6 @@ pythonpath = ["src"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

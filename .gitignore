@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Project
+data/
+outputs/
+*.pt
+*.onnx
+*.engine
+
+# IDE
+.vscode/
+.idea/
+.DS_Store

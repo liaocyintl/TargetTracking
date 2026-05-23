@@ -132,7 +132,7 @@ def build_ui() -> gr.Blocks:
                 with gr.Tab("File"):
                     video_file = gr.File(label="Video file", file_types=["video"])
                 with gr.Tab("Camera"):
-                    use_camera = gr.Checkbox(value=False, label="Use camera")
+                    use_camera = gr.Checkbox(value=True, label="Use camera")
                     camera_id = gr.Number(value=0, precision=0, label="Camera id")
 
                 model_name = gr.Dropdown(choices=_MODEL_CHOICES, value="yolo26n.pt",

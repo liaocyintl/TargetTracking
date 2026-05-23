@@ -2,7 +2,25 @@ from pathlib import Path
 
 import pytest
 
-from target_tracking.config import AppConfig, load_config, build_pipeline
+from target_tracking.config import AppConfig, load_config, build_pipeline, _resolve_point
+
+
+def test_resolve_point_floats_in_unit_interval_are_relative():
+    assert _resolve_point([0.5, 0.0], (1920, 1080)) == [960.0, 0.0]
+    assert _resolve_point([0.5, 1.0], (1920, 1080)) == [960.0, 1080.0]
+
+
+def test_resolve_point_ints_are_absolute_pixels():
+    assert _resolve_point([960, 540], (1920, 1080)) == [960.0, 540.0]
+
+
+def test_resolve_point_floats_above_one_treated_as_pixels():
+    assert _resolve_point([1.5, 2.0], (1920, 1080)) == [1.5, 2.0]
+
+
+def test_resolve_point_mixed_axes():
+    # x relative, y absolute
+    assert _resolve_point([0.25, 540], (1920, 1080)) == [480.0, 540.0]
 
 
 YAML = """

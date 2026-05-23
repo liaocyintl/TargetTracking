@@ -82,17 +82,35 @@ def _build_source(cfg: SourceConfig) -> VideoSource:
     return SOURCE_REGISTRY.build(cfg.type)
 
 
+def _resolve_point(point, frame_size: tuple[int, int]) -> list[float]:
+    """Resolve a [x, y] point. Floats in [0, 1] are fractions of frame size;
+    ints (or floats > 1) are absolute pixels."""
+    w, h = frame_size
+    x, y = point
+    rx = x * w if isinstance(x, float) and 0.0 <= x <= 1.0 else x
+    ry = y * h if isinstance(y, float) and 0.0 <= y <= 1.0 else y
+    return [float(rx), float(ry)]
+
+
 def build_pipeline(cfg: AppConfig) -> TrackingPipeline:
     source = _build_source(cfg.source)
     tracker = build_tracker(cfg.tracker.name, **cfg.tracker.params)
+    frame_size = source.frame_size
 
     counters = []
     for c in cfg.counters:
-        kwargs: dict[str, Any] = {"name": c.name, **c.params}
-        counters.append(build_counter(c.type, **kwargs))
+        params = dict(c.params)
+        if c.type == "line":
+            params["start"] = _resolve_point(params["start"], frame_size)
+            params["end"] = _resolve_point(params["end"], frame_size)
+        counters.append(build_counter(c.type, name=c.name, **params))
 
     overlay_lines = [
-        {"name": c.name, "start": c.params["start"], "end": c.params["end"]}
+        {
+            "name": c.name,
+            "start": _resolve_point(c.params["start"], frame_size),
+            "end": _resolve_point(c.params["end"], frame_size),
+        }
         for c in cfg.counters
         if c.type == "line"
     ]

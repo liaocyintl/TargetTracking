@@ -16,8 +16,8 @@ counters:
   - name: main_line
     type: line
     params:
-      start: [960, 0]
-      end: [960, 1080]
+      start: [0.5, 0.0]
+      end: [0.5, 1.0]
       classes_of_interest: [person, car]
 
 sinks:

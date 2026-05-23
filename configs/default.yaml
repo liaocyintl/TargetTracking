@@ -1,0 +1,32 @@
+source:
+  type: file
+  path: data/videos/demo.mp4
+
+tracker:
+  name: yolo
+  params:
+    model_name: yolo26n.pt
+    tracker: bytetrack.yaml
+    conf: 0.25
+    iou: 0.7
+    classes: [0, 2]
+    device: auto
+
+counters:
+  - name: main_line
+    type: line
+    params:
+      start: [0, 540]
+      end: [1920, 540]
+      classes_of_interest: [person, car]
+
+sinks:
+  display:
+    enabled: true
+  video:
+    enabled: true
+    path: outputs/annotated.mp4
+  stats:
+    enabled: true
+    format: csv
+    path: outputs/counts.csv

@@ -16,7 +16,7 @@ class Registry(Generic[T]):
             return cls
         return deco
 
-    def build(self, name: str, **kwargs) -> T:
+    def build(self, name: str, /, **kwargs) -> T:
         if name not in self._items:
             raise ValueError(
                 f"Unknown {self._kind}: {name!r}. Available: {sorted(self._items)}"

@@ -145,11 +145,11 @@ def build_ui() -> gr.Blocks:
 
                 gr.Markdown("**Counting line** (pixel coords)")
                 with gr.Row():
-                    line_x1 = gr.Number(value=0, label="x1")
-                    line_y1 = gr.Number(value=540, label="y1")
+                    line_x1 = gr.Number(value=960, label="x1")
+                    line_y1 = gr.Number(value=0, label="y1")
                 with gr.Row():
-                    line_x2 = gr.Number(value=1920, label="x2")
-                    line_y2 = gr.Number(value=540, label="y2")
+                    line_x2 = gr.Number(value=960, label="x2")
+                    line_y2 = gr.Number(value=1080, label="y2")
 
                 save_video = gr.Checkbox(value=True, label="Save annotated video")
                 save_stats = gr.Checkbox(value=True, label="Save stats CSV")

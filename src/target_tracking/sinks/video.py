@@ -25,7 +25,12 @@ class VideoSink(Sink):
             return
         h, w = shape[:2]
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-        self._writer = cv2.VideoWriter(str(self._path), fourcc, self._fps, (w, h))
+        writer = cv2.VideoWriter(str(self._path), fourcc, self._fps, (w, h))
+        if not writer.isOpened():
+            raise RuntimeError(
+                f"Failed to open VideoWriter for {self._path} (codec mp4v unavailable?)"
+            )
+        self._writer = writer
 
     def write(self, result: FrameResult, counts: dict) -> None:
         self._ensure_writer(result.frame.shape)

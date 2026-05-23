@@ -32,12 +32,14 @@ class _Runner:
         self.pipeline = build_pipeline(cfg)
         self.error = None
 
-        # Wire any DisplaySink's on_frame callback to capture the latest annotated frame
+        # Wire any DisplaySink: capture frames via callback, suppress the cv2 window
+        # (cv2.imshow from a background thread crashes on macOS / headless Linux).
         for s in self.pipeline._sinks:
             if hasattr(s, "_on_frame"):
                 def cb(frame, counts, self=self):
                     self.latest_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 s._on_frame = cb
+                s._show_window = False
 
         def _run():
             try:

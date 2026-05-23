@@ -91,11 +91,26 @@ def build_pipeline(cfg: AppConfig) -> TrackingPipeline:
         kwargs: dict[str, Any] = {"name": c.name, **c.params}
         counters.append(build_counter(c.type, **kwargs))
 
+    overlay_lines = [
+        {"name": c.name, "start": c.params["start"], "end": c.params["end"]}
+        for c in cfg.counters
+        if c.type == "line"
+    ]
+
     sinks = []
     if cfg.sinks.display.enabled:
-        sinks.append(build_sink("display", window_name=cfg.sinks.display.window_name))
+        sinks.append(build_sink(
+            "display",
+            window_name=cfg.sinks.display.window_name,
+            overlay_lines=overlay_lines,
+        ))
     if cfg.sinks.video.enabled:
-        sinks.append(build_sink("video", path=cfg.sinks.video.path, fps=source.fps))
+        sinks.append(build_sink(
+            "video",
+            path=cfg.sinks.video.path,
+            fps=source.fps,
+            overlay_lines=overlay_lines,
+        ))
     if cfg.sinks.stats.enabled:
         sinks.append(
             build_sink("stats", path=cfg.sinks.stats.path, format=cfg.sinks.stats.format)

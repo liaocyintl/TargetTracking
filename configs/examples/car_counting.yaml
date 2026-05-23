@@ -1,0 +1,24 @@
+source:
+  type: file
+  path: data/videos/traffic.mp4
+
+tracker:
+  name: yolo
+  params:
+    model_name: yolo26n.pt
+    tracker: bytetrack.yaml
+    classes: [2, 5, 7]
+    device: auto
+
+counters:
+  - name: northbound
+    type: line
+    params:
+      start: [200, 600]
+      end: [1700, 600]
+      classes_of_interest: [car, bus, truck]
+
+sinks:
+  display: { enabled: true }
+  video: { enabled: true, path: outputs/cars.mp4 }
+  stats: { enabled: true, format: csv, path: outputs/cars.csv }
